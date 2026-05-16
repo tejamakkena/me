@@ -406,38 +406,303 @@
     }
 
     /* ===== GITHUB STATS ===== */
-    .stats-wrapper {
+    .gh-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gh-metric {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .gh-metric:hover { border-color: var(--green); }
+
+    .gh-metric-icon { font-size: 0.9rem; }
+
+    .gh-metric-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .gh-metric-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ── Heatmap calendar ── */
+    .heatmap-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .heatmap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .heatmap-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .heatmap-total {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .heatmap-total strong { color: var(--green); font-weight: 700; }
+
+    .heatmap-scroll { overflow-x: auto; padding-bottom: 0.5rem; }
+
+    .heatmap-months-row {
+      display: flex;
+      margin-left: 24px;
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+
+    .heatmap-month-lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      width: 12px;
+      flex-shrink: 0;
+      overflow: visible;
+      white-space: nowrap;
+    }
+
+    .heatmap-body { display: flex; gap: 4px; }
+
+    .heatmap-day-lbls {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-      align-items: center;
+      gap: 3px;
+      padding-top: 1px;
+      width: 20px;
+      flex-shrink: 0;
     }
 
-    .stats-row {
+    .heatmap-day-lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+      height: 12px;
+      line-height: 12px;
+      text-align: right;
+    }
+
+    .heatmap-weeks { display: flex; gap: 3px; }
+
+    .contrib-week { display: flex; flex-direction: column; gap: 3px; }
+
+    .contrib-cell {
+      width: 12px; height: 12px;
+      border-radius: 2px;
+      cursor: default;
+      position: relative;
+      transition: opacity 0.15s;
+    }
+
+    .contrib-cell:hover { opacity: 0.7; }
+    .contrib-cell[data-level="0"] { background: #161b22; }
+    .contrib-cell[data-level="1"] { background: #0e4429; }
+    .contrib-cell[data-level="2"] { background: #006d32; }
+    .contrib-cell[data-level="3"] { background: #26a641; }
+    .contrib-cell[data-level="4"] { background: #39d353; }
+
+    .heatmap-legend {
       display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    .legend-cell { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* ── Two-column stats row ── */
+    .gh-stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
+      margin-bottom: 1rem;
     }
 
-    .stats-row img {
-      border-radius: 8px;
-      max-width: 100%;
-      height: auto;
+    @media (max-width: 640px) { .gh-stats-row { grid-template-columns: 1fr; } }
+
+    .gh-stat-card {
+      background: var(--bg2);
       border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem;
     }
 
-    .contrib-graph {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+    .gh-stat-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.1rem;
+    }
+
+    /* Language bars */
+    .lang-bar-item { margin-bottom: 0.85rem; }
+    .lang-bar-item:last-child { margin-bottom: 0; }
+
+    .lang-bar-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.3rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+    }
+
+    .lang-bar-name { display: flex; align-items: center; gap: 0.4rem; color: var(--text); }
+    .lang-bar-pct  { color: var(--muted); }
+
+    .lang-bar-track {
+      height: 5px;
+      background: var(--bg3);
+      border-radius: 3px;
       overflow: hidden;
     }
 
-    .contrib-graph img {
-      width: 100%;
-      display: block;
+    .lang-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.9s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Quick stats */
+    .quick-stats-list { display: flex; flex-direction: column; }
+
+    .quick-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quick-stat:last-child { border-bottom: none; }
+
+    .quick-stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quick-stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* repos grid */
+    .repos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .repo-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: all 0.22s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .repo-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,255,136,0.03), transparent);
+      opacity: 0;
+      transition: opacity 0.22s;
+    }
+
+    .repo-card:hover { border-color: var(--green); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,255,136,0.07); }
+    .repo-card:hover::after { opacity: 1; }
+
+    .repo-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .repo-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .repo-meta {
+      display: flex;
+      gap: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    .repo-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    .lang-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .repos-loading {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 1rem 0;
+    }
+
+    .repos-loading::before { content: '> '; color: var(--green); }
+
+    .repos-loading::after {
+      content: '_';
+      animation: blink 1s step-end infinite;
     }
 
     /* ===== CONTACT ===== */
@@ -775,52 +1040,70 @@
   <!-- GITHUB STATS -->
   <section id="github">
     <div class="section-label">open source</div>
-    <h2>GitHub Contributions</h2>
+    <h2>GitHub Activity</h2>
 
-    <div class="stats-wrapper">
-
-      <!-- Contribution activity graph -->
-      <div class="contrib-graph">
-        <img
-          src="https://github-readme-activity-graph.vercel.app/graph?username=tejamakkena&theme=react-dark&bg_color=0f1623&color=00ff88&line=00d4ff&point=00ff88&area=true&hide_border=true"
-          alt="Contribution graph"
-          loading="lazy"
-        />
-      </div>
-
-      <!-- Stats row 1 -->
-      <div class="stats-row">
-        <img
-          src="https://github-readme-stats.vercel.app/api?username=tejamakkena&theme=transparent&hide_border=true&include_all_commits=true&count_private=true&title_color=00ff88&text_color=cdd6f4&icon_color=00d4ff"
-          alt="GitHub stats"
-          loading="lazy"
-        />
-        <img
-          src="https://nirzak-streak-stats.vercel.app/?user=tejamakkena&theme=transparent&hide_border=true&ring=00ff88&fire=00d4ff&currStreakLabel=00ff88&sideLabels=cdd6f4&dates=6c7086&currStreakNum=ffffff&sideNums=ffffff"
-          alt="GitHub streak"
-          loading="lazy"
-        />
-      </div>
-
-      <!-- Top languages -->
-      <div class="stats-row">
-        <img
-          src="https://github-readme-stats.vercel.app/api/top-langs/?username=tejamakkena&theme=transparent&hide_border=true&include_all_commits=true&count_private=true&layout=compact&title_color=00ff88&text_color=cdd6f4"
-          alt="Top languages"
-          loading="lazy"
-        />
-      </div>
-
-      <!-- Trophies -->
-      <div class="contrib-graph">
-        <img
-          src="https://github-profile-trophy.vercel.app/?username=tejamakkena&theme=darkhub&no-frame=true&no-bg=true&margin-w=4&column=6"
-          alt="GitHub trophies"
-          loading="lazy"
-        />
-      </div>
-
+    <!-- Live API metrics -->
+    <div class="gh-metrics" id="gh-metrics">
+      <div class="gh-metric"><span class="gh-metric-icon">👥</span><span class="gh-metric-val" id="m-followers">—</span><span class="gh-metric-label">Followers</span></div>
+      <div class="gh-metric"><span class="gh-metric-icon">📦</span><span class="gh-metric-val" id="m-repos">—</span><span class="gh-metric-label">Public Repos</span></div>
+      <div class="gh-metric"><span class="gh-metric-icon">⭐</span><span class="gh-metric-val" id="m-stars">—</span><span class="gh-metric-label">Total Stars</span></div>
+      <div class="gh-metric"><span class="gh-metric-icon">🍴</span><span class="gh-metric-val" id="m-forks">—</span><span class="gh-metric-label">Total Forks</span></div>
+      <div class="gh-metric"><span class="gh-metric-icon">🔗</span><span class="gh-metric-val" id="m-following">—</span><span class="gh-metric-label">Following</span></div>
     </div>
+
+    <!-- Contribution heatmap calendar -->
+    <div class="heatmap-card">
+      <div class="heatmap-header">
+        <span class="heatmap-title">Contribution Calendar</span>
+        <span class="heatmap-total" id="heatmap-total">loading…</span>
+      </div>
+      <div class="heatmap-scroll">
+        <div class="heatmap-months-row" id="heatmap-months"></div>
+        <div class="heatmap-body">
+          <div class="heatmap-day-lbls">
+            <div class="heatmap-day-lbl"></div>
+            <div class="heatmap-day-lbl">Mon</div>
+            <div class="heatmap-day-lbl"></div>
+            <div class="heatmap-day-lbl">Wed</div>
+            <div class="heatmap-day-lbl"></div>
+            <div class="heatmap-day-lbl">Fri</div>
+            <div class="heatmap-day-lbl"></div>
+          </div>
+          <div class="heatmap-weeks" id="heatmap-weeks">
+            <!-- populated by JS -->
+          </div>
+        </div>
+        <div class="heatmap-legend">
+          <span>Less</span>
+          <div class="legend-cell" style="background:#161b22"></div>
+          <div class="legend-cell" style="background:#0e4429"></div>
+          <div class="legend-cell" style="background:#006d32"></div>
+          <div class="legend-cell" style="background:#26a641"></div>
+          <div class="legend-cell" style="background:#39d353"></div>
+          <span>More</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language breakdown + Quick stats -->
+    <div class="gh-stats-row">
+      <div class="gh-stat-card">
+        <div class="gh-stat-card-title">// language breakdown</div>
+        <div id="lang-bars"><span class="repos-loading">loading languages</span></div>
+      </div>
+      <div class="gh-stat-card">
+        <div class="gh-stat-card-title">// quick stats</div>
+        <div class="quick-stats-list" id="quick-stats"><span class="repos-loading">loading stats</span></div>
+      </div>
+    </div>
+
+    <!-- Top repos (fetched live) -->
+    <div style="margin-top:0.5rem;">
+      <div class="section-label" style="margin-bottom:0.5rem;">pinned repositories</div>
+      <div class="repos-loading" id="repos-loading">fetching repositories</div>
+      <div class="repos-grid" id="repos-grid"></div>
+    </div>
+
   </section>
 
   <hr class="divider" />
@@ -871,7 +1154,7 @@
     </p>
   </footer>
 
-  <!-- Typing effect (vanilla JS) -->
+  <!-- GitHub API + Typing effect -->
   <script>
     const roles = [
       'DevSecOps Engineer',
@@ -925,6 +1208,228 @@
       s.style.transition = 'opacity 0.6s ease';
       observer.observe(s);
     });
+
+    /* ── GitHub API ── */
+    const GH_USER = 'tejamakkena';
+    const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    const langColors = {
+      Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#2b7489',
+      Shell: '#89e051', Dockerfile: '#384d54', HCL: '#844FBA',
+      Java: '#b07219', Go: '#00ADD8', YAML: '#cb171e', HTML: '#e34c26',
+      CSS: '#563d7c', PowerShell: '#012456', Kotlin: '#A97BFF',
+      Ruby: '#701516', Rust: '#dea584', C: '#555555', 'C++': '#f34b7d',
+    };
+
+    function fmt(n) {
+      if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+      return String(n);
+    }
+
+    /* ── Contribution heatmap ── */
+    async function loadHeatmap() {
+      const el = document.getElementById('heatmap-weeks');
+      const totalEl = document.getElementById('heatmap-total');
+      const monthsEl = document.getElementById('heatmap-months');
+      try {
+        const today = new Date();
+        const cutoff = new Date(today);
+        cutoff.setDate(cutoff.getDate() - 364); // last 365 days inclusive
+
+        // Span may cross a year boundary, so fetch both years if needed
+        const years = [...new Set([cutoff.getFullYear(), today.getFullYear()])];
+        const results = await Promise.all(
+          years.map(y =>
+            fetch(`https://github-contributions-api.jogruber.de/v4/${GH_USER}?y=${y}`)
+              .then(r => r.json())
+          )
+        );
+        const all = results.flatMap(d => d.contributions || []);
+
+        // Keep only days within the last 365
+        const yearData = all.filter(d => {
+          const dt = new Date(d.date);
+          return dt >= cutoff && dt <= today;
+        });
+
+        // Align the first column to Sunday
+        const startDow = new Date(yearData[0]?.date || cutoff).getDay();
+        const padded = [
+          ...Array(startDow).fill({ date: '', count: 0, level: 0 }),
+          ...yearData,
+        ];
+
+        // Chunk into 7-day columns (weeks)
+        const weeks = [];
+        for (let i = 0; i < padded.length; i += 7)
+          weeks.push(padded.slice(i, i + 7));
+
+        // Pad the last partial week
+        if (weeks.length) {
+          const last = weeks[weeks.length - 1];
+          while (last.length < 7) last.push({ date: '', count: 0, level: 0 });
+        }
+
+        // Month labels: show name on the week column where the month first appears
+        const monthLabels = weeks.map(week => {
+          const first = week.find(d => d.date);
+          if (!first) return '';
+          const d = new Date(first.date);
+          return d.getDate() <= 7 ? MONTH_NAMES[d.getMonth()] : '';
+        });
+
+        monthsEl.innerHTML = monthLabels
+          .map(m => `<div class="heatmap-month-lbl">${m}</div>`)
+          .join('');
+
+        el.innerHTML = weeks.map(week =>
+          `<div class="contrib-week">${
+            week.map(day => {
+              const tip = day.date
+                ? `${day.date}: ${day.count} contribution${day.count !== 1 ? 's' : ''}`
+                : '';
+              return `<div class="contrib-cell" data-level="${day.level}" title="${tip}"></div>`;
+            }).join('')
+          }</div>`
+        ).join('');
+
+        const total = yearData.reduce((s, d) => s + d.count, 0);
+        totalEl.innerHTML = `<strong>${total.toLocaleString()}</strong> contributions in the last 365 days`;
+      } catch (_) {
+        totalEl.textContent = 'contribution data unavailable';
+        el.innerHTML = `<span style="color:var(--muted);font-size:.8rem;font-family:monospace;">
+          Could not load — API may be rate-limited.</span>`;
+      }
+    }
+
+    /* ── Language bar chart ── */
+    function buildLangBars(repos) {
+      const counts = {};
+      repos.filter(r => !r.fork && r.language).forEach(r => {
+        counts[r.language] = (counts[r.language] || 0) + 1;
+      });
+      const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 7);
+      const el = document.getElementById('lang-bars');
+      if (!sorted.length) { el.innerHTML = '<span style="color:var(--muted);font-size:.8rem;">No language data.</span>'; return; }
+
+      el.innerHTML = sorted.map(([lang, n]) => {
+        const pct = Math.round((n / total) * 100);
+        const color = langColors[lang] || '#6c7086';
+        return `
+          <div class="lang-bar-item">
+            <div class="lang-bar-header">
+              <span class="lang-bar-name">
+                <span class="lang-dot" style="background:${color}"></span>${lang}
+              </span>
+              <span class="lang-bar-pct">${pct}%</span>
+            </div>
+            <div class="lang-bar-track">
+              <div class="lang-bar-fill" style="background:${color}" data-w="${pct}"></div>
+            </div>
+          </div>`;
+      }).join('');
+
+      // Animate bars after paint
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.querySelectorAll('.lang-bar-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+      }));
+    }
+
+    /* ── Quick stats ── */
+    function buildQuickStats(profile, repos) {
+      const ownRepos = repos.filter(r => !r.fork);
+      const stars    = ownRepos.reduce((s, r) => s + r.stargazers_count, 0);
+      const forks    = repos.reduce((s, r) => s + r.forks_count, 0);
+      const watchers = ownRepos.reduce((s, r) => s + r.watchers_count, 0);
+
+      // Most recently pushed repo
+      const latest = [...repos].sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))[0];
+      const latestName = latest ? latest.name : '—';
+
+      const rows = [
+        { icon: '⭐', label: 'Stars earned',       val: fmt(stars) },
+        { icon: '📦', label: 'Own repositories',   val: ownRepos.length },
+        { icon: '🍴', label: 'Total forks',        val: fmt(forks) },
+        { icon: '👁️',  label: 'Watchers',           val: fmt(watchers) },
+        { icon: '👥', label: 'Followers',           val: fmt(profile.followers || 0) },
+        { icon: '🕐', label: 'Last push',           val: latestName },
+      ];
+
+      document.getElementById('quick-stats').innerHTML = rows.map(r => `
+        <div class="quick-stat">
+          <span class="quick-stat-label">${r.icon}&nbsp;${r.label}</span>
+          <span class="quick-stat-val">${r.val}</span>
+        </div>`).join('');
+    }
+
+    /* ── Top repos ── */
+    function buildRepos(repos) {
+      const grid    = document.getElementById('repos-grid');
+      const loading = document.getElementById('repos-loading');
+      const top = [...repos]
+        .filter(r => !r.fork)
+        .sort((a, b) => (b.stargazers_count + b.forks_count) - (a.stargazers_count + a.forks_count))
+        .slice(0, 6);
+
+      loading.style.display = 'none';
+      if (!top.length) { grid.innerHTML = '<span style="color:var(--muted);font-size:.8rem;">No public repositories found.</span>'; return; }
+
+      grid.innerHTML = top.map(r => {
+        const lang  = r.language || '';
+        const color = langColors[lang] || '#6c7086';
+        const desc  = r.description
+          ? (r.description.length > 88 ? r.description.slice(0, 88) + '…' : r.description)
+          : 'No description.';
+        const pushed = new Date(r.pushed_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        return `
+          <a class="repo-card" href="${r.html_url}" target="_blank" rel="noopener">
+            <div class="repo-name">🗂 ${r.name}</div>
+            <div class="repo-desc">${desc}</div>
+            <div class="repo-meta">
+              ${lang ? `<span><span class="lang-dot" style="background:${color}"></span>${lang}</span>` : ''}
+              <span>⭐ ${r.stargazers_count}</span>
+              <span>🍴 ${r.forks_count}</span>
+              <span>🕐 ${pushed}</span>
+            </div>
+          </a>`;
+      }).join('');
+    }
+
+    /* ── Orchestrate all GitHub calls ── */
+    async function loadGitHub() {
+      // Heatmap is independent — kick off in parallel, don't block other cards
+      loadHeatmap();
+
+      try {
+        const [profile, repos] = await Promise.all([
+          fetch(`https://api.github.com/users/${GH_USER}`).then(r => r.json()),
+          fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=pushed`).then(r => r.json()),
+        ]);
+
+        if (!Array.isArray(repos)) throw new Error('repos API error');
+
+        // Metric badges
+        document.getElementById('m-followers').textContent = fmt(profile.followers ?? 0);
+        document.getElementById('m-repos').textContent     = fmt(profile.public_repos ?? 0);
+        document.getElementById('m-following').textContent = fmt(profile.following ?? 0);
+        const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+        const totalForks = repos.reduce((s, r) => s + (r.forks_count || 0), 0);
+        document.getElementById('m-stars').textContent = fmt(totalStars);
+        document.getElementById('m-forks').textContent = fmt(totalForks);
+
+        buildLangBars(repos);
+        buildQuickStats(profile, repos);
+        buildRepos(repos);
+      } catch (_) {
+        ['m-stars','m-forks','m-followers','m-repos','m-following'].forEach(id => {
+          const el = document.getElementById(id); if (el) el.textContent = '?';
+        });
+        document.getElementById('repos-loading').textContent = 'could not load GitHub data';
+      }
+    }
+
+    loadGitHub();
   </script>
 </body>
 </html>
