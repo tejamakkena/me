@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venkat Teja Makkena | DevSecOps Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --bg2: #0f1623;
+      --bg3: #141d2b;
+      --border: #1e2d3d;
+      --green: #00ff88;
+      --cyan: #00d4ff;
+      --purple: #7c3aed;
+      --text: #cdd6f4;
+      --muted: #6c7086;
+      --accent: #00ff88;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 136, 0.012) 2px,
+        rgba(0, 255, 136, 0.012) 4px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 2rem 2rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .terminal-window {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(0, 255, 136, 0.06), 0 0 120px rgba(0, 212, 255, 0.04);
+    }
+
+    .terminal-bar {
+      background: var(--bg3);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+    .dot.red   { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green  { background: #28c840; }
+
+    .terminal-title {
+      margin-left: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .terminal-body {
+      padding: 2rem;
+    }
+
+    .prompt-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .prompt-line .prompt { color: var(--green); }
+    .prompt-line .cmd    { color: var(--cyan); }
+
+    .hero-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .hero-name .accent { color: var(--green); }
+
+    .hero-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--cyan);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-role::before { content: '> '; color: var(--muted); }
+
+    .hero-desc {
+      color: var(--text);
+      font-size: 1rem;
+      max-width: 620px;
+      line-height: 1.7;
+      opacity: 0.85;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #0a0e17;
+      font-weight: 700;
+      border: 1px solid var(--green);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--green);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .typed-cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.1em;
+      background: var(--green);
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== SECTION COMMON ===== */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-label::before { content: '// '; }
+
+    h2 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ===== ABOUT ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text p {
+      color: var(--text);
+      opacity: 0.85;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .stat-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--green); }
+
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ===== CURRENTLY WORKING ON ===== */
+    .focus-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .focus-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .focus-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--green);
+      transform: scaleY(0);
+      transition: transform 0.25s;
+    }
+
+    .focus-card:hover { border-color: var(--green); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,255,136,0.08); }
+    .focus-card:hover::before { transform: scaleY(1); }
+
+    .focus-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .focus-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .focus-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .focus-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--cyan);
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+
+    .skill-group-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    .skill-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-item {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    /* ===== GITHUB STATS ===== */
+    .stats-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .stats-row img {
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+    }
+
+    .contrib-graph {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .contrib-graph img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-grid {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .contact-card .icon {
+      font-size: 1.2rem;
+    }
+
+    .contact-card .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .contact-card .sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--green); text-decoration: none; }
+
+    /* ===== GLOW ELEMENTS ===== */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+
+    .glow-orb.one {
+      width: 400px; height: 400px;
+      background: rgba(0, 255, 136, 0.12);
+      top: -100px; left: -100px;
+    }
+
+    .glow-orb.two {
+      width: 500px; height: 500px;
+      background: rgba(0, 212, 255, 0.08);
+      bottom: 10%; right: -100px;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 2rem;
+    }
+
+    /* mobile nav */
+    @media (max-width: 500px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb one"></div>
+  <div class="glow-orb two"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">vtm<span>@devsec</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#working-on">focus</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#github">github</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" style="padding-top:80px;">
+    <div class="hero-grid">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="terminal-title">~/portfolio — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="prompt-line">
+            <span class="prompt">❯ </span><span class="cmd">whoami</span>
+          </div>
+          <h1 class="hero-name">
+            Venkat&nbsp;<span class="accent">Teja</span><br/>Makkena
+          </h1>
+          <div class="hero-role" id="typed-role">DevSecOps Engineer<span class="typed-cursor"></span></div>
+          <p class="hero-desc">
+            8+ years securing the software delivery pipeline — from SAST/DAST scanning and cloud
+            security posture to building automated security tooling that ships fast <em>and</em> safe.
+            I close the gap between Dev speed and Sec rigour.
+          </p>
+          <div class="hero-actions">
+            <a href="#github" class="btn btn-primary">View GitHub</a>
+            <a href="#contact" class="btn btn-outline">Get in touch</a>
+            <a href="https://www.linkedin.com/in/venkat-teja-m-8806941b4" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">about</div>
+    <h2>Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a DevSecOps engineer who has spent 8+ years making security a first-class citizen
+          in software delivery — not an afterthought. My work spans secure coding practices, cloud
+          security architecture, SAST/DAST tooling, and security operations.
+        </p>
+        <p>
+          I thrive at the intersection of development velocity and security rigour: automating
+          security gates in CI/CD pipelines so teams ship confidently, building dashboards that
+          surface risk before it becomes an incident, and building organisational security culture
+          from the ground up.
+        </p>
+        <p>
+          Outside of work I enjoy photography (Lightroom is my zen space) and tinkering with
+          Raspberry Pi projects.
+        </p>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-number">8+</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Cloud Platforms</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Vulnerabilities Caught</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Zero-Trust Compromises</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CURRENTLY WORKING ON -->
+  <section id="working-on">
+    <div class="section-label">currently building</div>
+    <h2>What I'm Working On</h2>
+    <div class="focus-cards">
+
+      <div class="focus-card">
+        <div class="focus-icon">🔐</div>
+        <div class="focus-title">Security Pipeline Automation</div>
+        <div class="focus-desc">
+          Building reusable GitHub Actions and Jenkins shared libraries that embed SAST, dependency
+          scanning, secret detection, and container scanning into every PR — zero friction for devs.
+        </div>
+        <div class="focus-tags">
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">SonarQube</span>
+          <span class="tag">Trivy</span>
+          <span class="tag">gitleaks</span>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon">☁️</div>
+        <div class="focus-title">Cloud Security Posture</div>
+        <div class="focus-desc">
+          Designing policy-as-code frameworks for Azure environments — CIS benchmark enforcement,
+          automated remediation runbooks, and real-time alerting via Elasticsearch + Power BI.
+        </div>
+        <div class="focus-tags">
+          <span class="tag">Azure Policy</span>
+          <span class="tag">Terraform</span>
+          <span class="tag">Elasticsearch</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon">🤖</div>
+        <div class="focus-title">AI-Assisted Threat Detection</div>
+        <div class="focus-desc">
+          Experimenting with ML models (scikit-learn, PyTorch) to classify log anomalies and
+          prioritise vulnerability findings — reducing alert fatigue for security ops teams.
+        </div>
+        <div class="focus-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">scikit-learn</span>
+          <span class="tag">MLflow</span>
+          <span class="tag">ELK Stack</span>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon">🐳</div>
+        <div class="focus-title">Container & K8s Hardening</div>
+        <div class="focus-desc">
+          Defining and enforcing security standards for Kubernetes workloads — admission controllers,
+          runtime security policies, and image provenance verification in CI.
+        </div>
+        <div class="focus-tags">
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Docker</span>
+          <span class="tag">OPA/Gatekeeper</span>
+          <span class="tag">Cosign</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">tech stack</div>
+    <h2>Skills & Tools</h2>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Security</div>
+        <div class="skill-items">
+          <span class="skill-item">SAST/DAST</span>
+          <span class="skill-item">SonarQube</span>
+          <span class="skill-item">OWASP</span>
+          <span class="skill-item">Threat Modelling</span>
+          <span class="skill-item">Penetration Testing</span>
+          <span class="skill-item">Zero Trust</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Infra</div>
+        <div class="skill-items">
+          <span class="skill-item">Azure</span>
+          <span class="skill-item">AWS</span>
+          <span class="skill-item">Kubernetes</span>
+          <span class="skill-item">Docker</span>
+          <span class="skill-item">Terraform</span>
+          <span class="skill-item">Nginx</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-items">
+          <span class="skill-item">Python</span>
+          <span class="skill-item">Bash</span>
+          <span class="skill-item">PowerShell</span>
+          <span class="skill-item">YAML</span>
+          <span class="skill-item">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">CI/CD & Pipelines</div>
+        <div class="skill-items">
+          <span class="skill-item">GitHub Actions</span>
+          <span class="skill-item">Jenkins</span>
+          <span class="skill-item">Maven</span>
+          <span class="skill-item">Playwright</span>
+          <span class="skill-item">Trivy</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Observability</div>
+        <div class="skill-items">
+          <span class="skill-item">Elasticsearch</span>
+          <span class="skill-item">Kibana</span>
+          <span class="skill-item">Power BI</span>
+          <span class="skill-item">Grafana</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Data & ML</div>
+        <div class="skill-items">
+          <span class="skill-item">PyTorch</span>
+          <span class="skill-item">scikit-learn</span>
+          <span class="skill-item">Pandas</span>
+          <span class="skill-item">NumPy</span>
+          <span class="skill-item">MLflow</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- GITHUB STATS -->
+  <section id="github">
+    <div class="section-label">open source</div>
+    <h2>GitHub Contributions</h2>
+
+    <div class="stats-wrapper">
+
+      <!-- Contribution activity graph -->
+      <div class="contrib-graph">
+        <img
+          src="https://github-readme-activity-graph.vercel.app/graph?username=tejamakkena&theme=react-dark&bg_color=0f1623&color=00ff88&line=00d4ff&point=00ff88&area=true&hide_border=true"
+          alt="Contribution graph"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Stats row 1 -->
+      <div class="stats-row">
+        <img
+          src="https://github-readme-stats.vercel.app/api?username=tejamakkena&theme=transparent&hide_border=true&include_all_commits=true&count_private=true&title_color=00ff88&text_color=cdd6f4&icon_color=00d4ff"
+          alt="GitHub stats"
+          loading="lazy"
+        />
+        <img
+          src="https://nirzak-streak-stats.vercel.app/?user=tejamakkena&theme=transparent&hide_border=true&ring=00ff88&fire=00d4ff&currStreakLabel=00ff88&sideLabels=cdd6f4&dates=6c7086&currStreakNum=ffffff&sideNums=ffffff"
+          alt="GitHub streak"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Top languages -->
+      <div class="stats-row">
+        <img
+          src="https://github-readme-stats.vercel.app/api/top-langs/?username=tejamakkena&theme=transparent&hide_border=true&include_all_commits=true&count_private=true&layout=compact&title_color=00ff88&text_color=cdd6f4"
+          alt="Top languages"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Trophies -->
+      <div class="contrib-graph">
+        <img
+          src="https://github-profile-trophy.vercel.app/?username=tejamakkena&theme=darkhub&no-frame=true&no-bg=true&margin-w=4&column=6"
+          alt="GitHub trophies"
+          loading="lazy"
+        />
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">get in touch</div>
+    <h2>Contact</h2>
+    <div class="contact-grid">
+
+      <a href="https://www.linkedin.com/in/venkat-teja-m-8806941b4" target="_blank" rel="noopener" class="contact-card">
+        <span class="icon">💼</span>
+        <div>
+          <div class="label">LinkedIn</div>
+          <div class="sub">venkat-teja-m</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/tejamakkena" target="_blank" rel="noopener" class="contact-card">
+        <span class="icon">🐙</span>
+        <div>
+          <div class="label">GitHub</div>
+          <div class="sub">@tejamakkena</div>
+        </div>
+      </a>
+
+      <a href="mailto:tejamakkena05@gmail.com" class="contact-card">
+        <span class="icon">📧</span>
+        <div>
+          <div class="label">Email</div>
+          <div class="sub">tejamakkena05@gmail.com</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      Built with pure HTML/CSS &mdash; no frameworks, no bloat.
+      &nbsp;|&nbsp;
+      <a href="https://github.com/tejamakkena" target="_blank" rel="noopener">@tejamakkena</a>
+      &nbsp;|&nbsp;
+      <a href="https://visitcount.itsvg.in/api?id=tejamakkena&icon=0&color=1" style="vertical-align:middle;">
+        <img src="https://visitcount.itsvg.in/api?id=tejamakkena&icon=0&color=1" alt="visitor count" style="height:18px;border-radius:4px;" loading="lazy" />
+      </a>
+    </p>
+  </footer>
+
+  <!-- Typing effect (vanilla JS) -->
+  <script>
+    const roles = [
+      'DevSecOps Engineer',
+      'Cloud Security Architect',
+      'Security Automation Builder',
+      'SAST/DAST Specialist',
+      'Zero Trust Advocate',
+    ];
+
+    const el = document.getElementById('typed-role');
+    let ri = 0, ci = 0, deleting = false;
+
+    function tick() {
+      const word = roles[ri];
+      const cursor = '<span class="typed-cursor"></span>';
+
+      if (!deleting) {
+        ci++;
+        el.innerHTML = '> ' + word.slice(0, ci) + cursor;
+        if (ci === word.length) {
+          deleting = true;
+          setTimeout(tick, 1800);
+          return;
+        }
+        setTimeout(tick, 80);
+      } else {
+        ci--;
+        el.innerHTML = '> ' + word.slice(0, ci) + cursor;
+        if (ci === 0) {
+          deleting = false;
+          ri = (ri + 1) % roles.length;
+          setTimeout(tick, 400);
+          return;
+        }
+        setTimeout(tick, 40);
+      }
+    }
+
+    setTimeout(tick, 600);
+
+    /* Fade-in sections on scroll */
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) e.target.style.opacity = '1';
+      }),
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('section').forEach(s => {
+      s.style.opacity = '0';
+      s.style.transition = 'opacity 0.6s ease';
+      observer.observe(s);
+    });
+  </script>
+</body>
+</html>
