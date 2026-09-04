@@ -368,6 +368,123 @@
       color: var(--cyan);
     }
 
+    /* ===== EXPERIENCE TIMELINE ===== */
+    .timeline { position: relative; padding-left: 2rem; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), var(--cyan), var(--green));
+      opacity: 0.25;
+    }
+
+    .timeline-item { position: relative; margin-bottom: 2rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.45rem; top: 8px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--green);
+      z-index: 1;
+    }
+
+    .timeline-dot.current {
+      background: var(--cyan);
+      box-shadow: 0 0 0 2px var(--cyan), 0 0 10px rgba(0,212,255,0.6);
+      animation: tdpulse 2s ease-in-out infinite;
+    }
+
+    @keyframes tdpulse {
+      0%,100% { box-shadow: 0 0 0 2px var(--cyan), 0 0 10px rgba(0,212,255,0.5); }
+      50%      { box-shadow: 0 0 0 4px rgba(0,212,255,0.2), 0 0 20px rgba(0,212,255,0.3); }
+    }
+
+    .timeline-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem;
+      transition: border-color 0.2s;
+    }
+
+    .timeline-card:hover { border-color: rgba(0,255,136,0.25); }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-company {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .timeline-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--green);
+      background: rgba(0,255,136,0.07);
+      border: 1px solid rgba(0,255,136,0.18);
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .timeline-role {
+      font-size: 0.8rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .timeline-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+
+    .timeline-bullets li {
+      font-size: 0.82rem;
+      color: var(--text);
+      opacity: 0.85;
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .timeline-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: 0.65rem;
+      top: 3px;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .timeline-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
     /* ===== SKILLS ===== */
     .skills-grid {
       display: grid;
@@ -801,6 +918,7 @@
     <a href="#hero" class="nav-logo">vtm<span>@devsec</span></a>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
       <li><a href="#working-on">focus</a></li>
       <li><a href="#skills">skills</a></li>
       <li><a href="#github">github</a></li>
@@ -850,39 +968,150 @@
     <div class="about-grid">
       <div class="about-text">
         <p>
-          I'm a DevSecOps engineer who has spent 8+ years making security a first-class citizen
-          in software delivery — not an afterthought. My work spans secure coding practices, cloud
-          security architecture, SAST/DAST tooling, and security operations.
+          Security engineer at John Deere with 8+ years spanning infrastructure hardening,
+          application security, and connected-vehicle threat detection. I've worked across the full
+          security stack — from Ansible-driven baseline enforcement on NetApp and F5 hardware to
+          SAST/SCA/DAST at enterprise scale, to AI-powered fraud and threat detection on a global
+          fleet of machines.
         </p>
         <p>
-          I thrive at the intersection of development velocity and security rigour: automating
-          security gates in CI/CD pipelines so teams ship confidently, building dashboards that
-          surface risk before it becomes an incident, and building organisational security culture
-          from the ground up.
+          Currently on the Product Security Defense Center (PSDC) team, where I build the tooling
+          that watches John Deere's connected equipment for threats — GPS spoofing, license fraud,
+          unauthorized root commands, and malicious traffic — using Databricks, Python, and AI.
         </p>
         <p>
-          Outside of work I enjoy photography (Lightroom is my zen space) and tinkering with
-          Raspberry Pi projects.
+          Outside work: photography (Lightroom is my zen space) and Raspberry Pi tinkering.
         </p>
       </div>
       <div class="stat-cards">
         <div class="stat-card">
           <div class="stat-number">8+</div>
-          <div class="stat-label">Years of Experience</div>
+          <div class="stat-label">Years Experience</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">3</div>
-          <div class="stat-label">Cloud Platforms</div>
+          <div class="stat-label">Roles at John Deere</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">∞</div>
-          <div class="stat-label">Vulnerabilities Caught</div>
+          <div class="stat-number">~0</div>
+          <div class="stat-label">High/Critical Vulns Left</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">0</div>
-          <div class="stat-label">Zero-Trust Compromises</div>
+          <div class="stat-number">🌍</div>
+          <div class="stat-label">Global Fleet Tracked</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">career</div>
+    <h2>Work Experience</h2>
+    <div class="timeline">
+
+      <!-- PSDC -->
+      <div class="timeline-item">
+        <span class="timeline-dot current"></span>
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <div class="timeline-company">John Deere</div>
+              <div class="timeline-role">Software Engineer · PSDC — Product Security Defense Center</div>
+            </div>
+            <span class="timeline-period">Aug 2024 – Present</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Built and operate John Deere's Vehicle Security Operations Center — monitoring connected machines globally across machine metadata, telematics events, and usage telemetry</li>
+            <li>Detect license fraud: identifying services consumed without valid subscriptions across the global fleet</li>
+            <li>Identify GPS spoofing: machines reporting off-time or falsified coordinates flagged and investigated</li>
+            <li>Surface unauthorized root command execution and privilege escalation on embedded machine systems</li>
+            <li>Monitor inbound/outbound firewall attacks and malicious traffic patterns on connected equipment</li>
+            <li>Built AI-assisted threat classification pipelines using Databricks Genie to surface anomalies from high-volume telematics streams</li>
+            <li>Threat model aligned to the Automotive Threat Matrix; authored detection logic for known automotive attack patterns</li>
+            <li>Engineered Databricks infrastructure: catalog management, Delta tables, scheduled jobs, notebooks, and Databricks Apps for operationalising detections at scale</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Databricks</span>
+            <span class="timeline-tag">Python</span>
+            <span class="timeline-tag">SQL</span>
+            <span class="timeline-tag">Databricks Genie</span>
+            <span class="timeline-tag">AI / ML</span>
+            <span class="timeline-tag">Automotive Threat Matrix</span>
+            <span class="timeline-tag">Telematics</span>
+            <span class="timeline-tag">Fraud Detection</span>
+            <span class="timeline-tag">GPS Spoofing Detection</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AppSec -->
+      <div class="timeline-item">
+        <span class="timeline-dot"></span>
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <div class="timeline-company">John Deere</div>
+              <div class="timeline-role">Information Security Engineer · Application Scanning Team</div>
+            </div>
+            <span class="timeline-period">Apr 2022 – Aug 2024</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Led enterprise-wide onboarding of SAST, SCA, and DAST tooling — Veracode, Checkmarx, and Mend — across hundreds of application teams</li>
+            <li>Owned the full vulnerability lifecycle: triage, prioritisation, escalation, remediation guidance, and closure verification</li>
+            <li>Conducted code reviews to validate developer fixes and advise on secure coding patterns</li>
+            <li>Drove high and critical vulnerability counts to near-zero across the application portfolio</li>
+            <li>Built custom vulnerability dashboards (HTML/JS) for leadership visibility and per-team reporting</li>
+            <li>Enabled programmatic API access so engineering teams could self-serve scan results and integrate findings into their own CI pipelines</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Veracode</span>
+            <span class="timeline-tag">Checkmarx</span>
+            <span class="timeline-tag">Mend</span>
+            <span class="timeline-tag">SAST</span>
+            <span class="timeline-tag">SCA</span>
+            <span class="timeline-tag">DAST</span>
+            <span class="timeline-tag">Code Review</span>
+            <span class="timeline-tag">Vulnerability Management</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security by Design -->
+      <div class="timeline-item">
+        <span class="timeline-dot"></span>
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <div class="timeline-company">John Deere (Contractor)</div>
+              <div class="timeline-role">Security Engineer · Security by Design Team</div>
+            </div>
+            <span class="timeline-period">Dec 2018 – Apr 2022</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Automated secure configuration baseline enforcement across infrastructure using Ansible playbooks — continuous drift detection with auto-remediation across NetApp storage, F5 application delivery controllers, and CyberArk Conjur</li>
+            <li>Hardened SQL Server and PostgreSQL instances: disabled root accounts, enforced password rotation policies, and locked down server configurations to CIS benchmark</li>
+            <li>Designed and built a GitHub secret scanner on AWS — scans all repositories for exposed credentials and automatically opens issues on detection; evolved from a cron-scheduled job into an event-driven GitHub App triggered on every push</li>
+            <li>Managed AWS IAM roles and policies; classified accounts by risk type and enforced least-privilege boundaries using the AWS SDK</li>
+            <li>Built automated quarantine workflows using AWS SDK to isolate cloud resources flagged as potential threats without requiring manual intervention</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Ansible</span>
+            <span class="timeline-tag">AWS</span>
+            <span class="timeline-tag">AWS SDK</span>
+            <span class="timeline-tag">CyberArk Conjur</span>
+            <span class="timeline-tag">F5</span>
+            <span class="timeline-tag">NetApp</span>
+            <span class="timeline-tag">GitHub Apps</span>
+            <span class="timeline-tag">Secret Scanning</span>
+            <span class="timeline-tag">IAM</span>
+            <span class="timeline-tag">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -895,62 +1124,66 @@
     <div class="focus-cards">
 
       <div class="focus-card">
-        <div class="focus-icon">🔐</div>
-        <div class="focus-title">Security Pipeline Automation</div>
+        <div class="focus-icon">🚜</div>
+        <div class="focus-title">Vehicle Security Operations</div>
         <div class="focus-desc">
-          Building reusable GitHub Actions and Jenkins shared libraries that embed SAST, dependency
-          scanning, secret detection, and container scanning into every PR — zero friction for devs.
+          Running PSDC's connected-machine threat monitoring — tracking the global John Deere fleet
+          for GPS spoofing, unauthorized root commands, firewall attacks, and malicious traffic aligned
+          to the Automotive Threat Matrix.
         </div>
         <div class="focus-tags">
-          <span class="tag">GitHub Actions</span>
-          <span class="tag">SonarQube</span>
-          <span class="tag">Trivy</span>
-          <span class="tag">gitleaks</span>
-        </div>
-      </div>
-
-      <div class="focus-card">
-        <div class="focus-icon">☁️</div>
-        <div class="focus-title">Cloud Security Posture</div>
-        <div class="focus-desc">
-          Designing policy-as-code frameworks for Azure environments — CIS benchmark enforcement,
-          automated remediation runbooks, and real-time alerting via Elasticsearch + Power BI.
-        </div>
-        <div class="focus-tags">
-          <span class="tag">Azure Policy</span>
-          <span class="tag">Terraform</span>
-          <span class="tag">Elasticsearch</span>
+          <span class="tag">Databricks</span>
+          <span class="tag">Telematics</span>
           <span class="tag">Python</span>
+          <span class="tag">Automotive Threat Matrix</span>
         </div>
       </div>
 
       <div class="focus-card">
         <div class="focus-icon">🤖</div>
-        <div class="focus-title">AI-Assisted Threat Detection</div>
+        <div class="focus-title">AI-Driven Fraud Detection</div>
         <div class="focus-desc">
-          Experimenting with ML models (scikit-learn, PyTorch) to classify log anomalies and
-          prioritise vulnerability findings — reducing alert fatigue for security ops teams.
+          Using Databricks Genie and ML to classify high-volume telematics anomalies — detecting
+          license fraud, subscription abuse, and behavioural outliers from millions of daily machine
+          events without drowning in alerts.
         </div>
         <div class="focus-tags">
-          <span class="tag">PyTorch</span>
-          <span class="tag">scikit-learn</span>
-          <span class="tag">MLflow</span>
-          <span class="tag">ELK Stack</span>
+          <span class="tag">Databricks Genie</span>
+          <span class="tag">ML / AI</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Fraud Detection</span>
         </div>
       </div>
 
       <div class="focus-card">
-        <div class="focus-icon">🐳</div>
-        <div class="focus-title">Container & K8s Hardening</div>
+        <div class="focus-icon">📊</div>
+        <div class="focus-title">Security Data Engineering</div>
         <div class="focus-desc">
-          Defining and enforcing security standards for Kubernetes workloads — admission controllers,
-          runtime security policies, and image provenance verification in CI.
+          Building the data infrastructure behind PSDC detections — Delta tables, catalog management,
+          scheduled Databricks jobs, and Databricks Apps that make threat data queryable and
+          actionable for the security ops team.
         </div>
         <div class="focus-tags">
-          <span class="tag">Kubernetes</span>
-          <span class="tag">Docker</span>
-          <span class="tag">OPA/Gatekeeper</span>
-          <span class="tag">Cosign</span>
+          <span class="tag">Delta Lake</span>
+          <span class="tag">Databricks Apps</span>
+          <span class="tag">Catalog Management</span>
+          <span class="tag">Scheduled Jobs</span>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon">🔐</div>
+        <div class="focus-title">AppSec at Scale</div>
+        <div class="focus-desc">
+          Past work: drove enterprise SAST/SCA/DAST adoption across hundreds of teams via Veracode,
+          Checkmarx, and Mend — cutting high/critical vulnerabilities to near-zero and building
+          the dashboards that made it measurable.
+        </div>
+        <div class="focus-tags">
+          <span class="tag">Veracode</span>
+          <span class="tag">Checkmarx</span>
+          <span class="tag">Mend</span>
+          <span class="tag">Vulnerability Management</span>
         </div>
       </div>
 
@@ -966,26 +1199,52 @@
     <div class="skills-grid">
 
       <div class="skill-group">
-        <div class="skill-group-title">Security</div>
+        <div class="skill-group-title">AppSec Tools</div>
         <div class="skill-items">
-          <span class="skill-item">SAST/DAST</span>
+          <span class="skill-item">Veracode</span>
+          <span class="skill-item">Checkmarx</span>
+          <span class="skill-item">Mend</span>
           <span class="skill-item">SonarQube</span>
+          <span class="skill-item">SAST / SCA / DAST</span>
           <span class="skill-item">OWASP</span>
-          <span class="skill-item">Threat Modelling</span>
-          <span class="skill-item">Penetration Testing</span>
-          <span class="skill-item">Zero Trust</span>
+          <span class="skill-item">Secret Scanning</span>
         </div>
       </div>
 
       <div class="skill-group">
-        <div class="skill-group-title">Cloud & Infra</div>
+        <div class="skill-group-title">Infrastructure Security</div>
         <div class="skill-items">
-          <span class="skill-item">Azure</span>
+          <span class="skill-item">Ansible</span>
+          <span class="skill-item">CyberArk Conjur</span>
+          <span class="skill-item">F5 ADC</span>
+          <span class="skill-item">NetApp</span>
+          <span class="skill-item">Zero Trust</span>
+          <span class="skill-item">Threat Modelling</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & IAM</div>
+        <div class="skill-items">
           <span class="skill-item">AWS</span>
-          <span class="skill-item">Kubernetes</span>
-          <span class="skill-item">Docker</span>
+          <span class="skill-item">AWS SDK</span>
+          <span class="skill-item">Azure</span>
+          <span class="skill-item">IAM / Policies</span>
           <span class="skill-item">Terraform</span>
-          <span class="skill-item">Nginx</span>
+          <span class="skill-item">Docker</span>
+          <span class="skill-item">Kubernetes</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Data & Analytics</div>
+        <div class="skill-items">
+          <span class="skill-item">Databricks</span>
+          <span class="skill-item">Databricks Genie</span>
+          <span class="skill-item">Delta Lake</span>
+          <span class="skill-item">Elasticsearch</span>
+          <span class="skill-item">Power BI</span>
+          <span class="skill-item">Kibana</span>
         </div>
       </div>
 
@@ -993,42 +1252,43 @@
         <div class="skill-group-title">Languages</div>
         <div class="skill-items">
           <span class="skill-item">Python</span>
+          <span class="skill-item">SQL</span>
           <span class="skill-item">Bash</span>
           <span class="skill-item">PowerShell</span>
           <span class="skill-item">YAML</span>
-          <span class="skill-item">SQL</span>
         </div>
       </div>
 
       <div class="skill-group">
-        <div class="skill-group-title">CI/CD & Pipelines</div>
+        <div class="skill-group-title">CI/CD & Automation</div>
         <div class="skill-items">
           <span class="skill-item">GitHub Actions</span>
+          <span class="skill-item">GitHub Apps</span>
           <span class="skill-item">Jenkins</span>
+          <span class="skill-item">Ansible Playbooks</span>
           <span class="skill-item">Maven</span>
-          <span class="skill-item">Playwright</span>
-          <span class="skill-item">Trivy</span>
         </div>
       </div>
 
       <div class="skill-group">
-        <div class="skill-group-title">Observability</div>
-        <div class="skill-items">
-          <span class="skill-item">Elasticsearch</span>
-          <span class="skill-item">Kibana</span>
-          <span class="skill-item">Power BI</span>
-          <span class="skill-item">Grafana</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <div class="skill-group-title">Data & ML</div>
+        <div class="skill-group-title">ML / AI</div>
         <div class="skill-items">
           <span class="skill-item">PyTorch</span>
           <span class="skill-item">scikit-learn</span>
           <span class="skill-item">Pandas</span>
           <span class="skill-item">NumPy</span>
           <span class="skill-item">MLflow</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Databases</div>
+        <div class="skill-items">
+          <span class="skill-item">PostgreSQL</span>
+          <span class="skill-item">SQL Server</span>
+          <span class="skill-item">MySQL</span>
+          <span class="skill-item">DynamoDB</span>
+          <span class="skill-item">SQLite</span>
         </div>
       </div>
 
